@@ -1,0 +1,30 @@
+{
+  "name": "ts-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "tsc:init": "tsc --init",
+    "tsc:watch": "tsc -w",
+    "typings": "typings",
+    "typings:install": "typings install",
+    "postinstall": "typings install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eloylp/ts-sample.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eloylp/ts-sample/issues"
+  },
+  "homepage": "https://github.com/eloylp/ts-sample#readme",
+  "dependencies": {
+    "typescript": "^2.3.4",
+    "typings": "^2.1.1"
+  }
+}
