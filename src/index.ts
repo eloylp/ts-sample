@@ -21,11 +21,11 @@ class StatusPublisher implements Publisher {
         this.subscribers.push(subscriber);
     }
 
-    publish(element: any): void {
+    publish(order: Order): void {
 
         for (let subscriber of this.subscribers) {
-            if (subscriber.isSubscribedTo(element)) {
-                subscriber.handle(element);
+            if (subscriber.isSubscribedTo(order)) {
+                subscriber.handle(order);
             }
         }
     }
@@ -42,7 +42,7 @@ class RequestedStatusSubscriber implements Subscriber {
 }
 
 
-class InprogressStatusSubscriber implements Subscriber {
+class InProgressStatusSubscriber implements Subscriber {
     handle(order: Order): void {
         console.log("A new email was sent (" + order.customer.email + ") to our customer " + order.customer.name + ". we are working on it !");
     }
@@ -173,7 +173,7 @@ class Order {
 
 let statusPublisher = new StatusPublisher();
 statusPublisher.subscribe(new RequestedStatusSubscriber());
-statusPublisher.subscribe(new InprogressStatusSubscriber());
+statusPublisher.subscribe(new InProgressStatusSubscriber());
 statusPublisher.subscribe(new SentStatusSubscriber());
 
 const getRandomFromArray = function (myArray: Array<any>): any {
