@@ -1,6 +1,8 @@
 
-
 import {Publisher} from "../../Core/Publisher";
+import {Subscriber} from "../../Core/Subscriber";
+import {Order} from "./Order";
+
 export class StatusPublisher implements Publisher {
 
     private subscribers: Array<Subscriber> = [];

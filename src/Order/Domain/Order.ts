@@ -1,6 +1,8 @@
 
 import {Uuid} from "./Uuid";
 import {Status} from "./Status";
+import {Customer} from "./Customer";
+
 export class Order {
 
 
