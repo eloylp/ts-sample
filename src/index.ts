@@ -8,7 +8,7 @@ import {StatusPublisher} from "./Order/Domain/StatusPublisher";
 import {RequestedStatusSubscriber} from "./Order/Domain/RequestedStatusSubscriber";
 import {InProgressStatusSubscriber} from "./Order/Domain/InProgressStatusSubscriber";
 import {SentStatusSubscriber} from "./Order/Domain/SentStatusSubscriber";
-import {Customer} from "./Order/Domain/Customer";
+import {Customer} from "./Customer/Domain/Customer";
 import {Order} from "./Order/Domain/Order";
 import {Uuid} from "./Order/Domain/Uuid";
 import {Status} from "./Order/Domain/Status";

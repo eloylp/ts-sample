@@ -1,19 +1,19 @@
-
 import {Uuid} from "./Uuid";
 import {Status} from "./Status";
-import {Customer} from "./Customer";
+import {Customer} from "../../Customer/Domain/Customer";
 
 export class Order {
 
 
-    private orderNo: Uuid;
+
+    private _orderNo: Uuid;
     private _customer: Customer;
     private _status: string;
     private _items: Array<string>;
 
     constructor(uuid: Uuid, customer: Customer, items: Array<string>, status: string = Status.requested) {
 
-        this.orderNo = uuid;
+        this._orderNo = uuid;
         this._customer = customer;
         this.items = items;
         this.status = status;
@@ -42,6 +42,9 @@ export class Order {
 
     get customer(): Customer {
         return this._customer;
+    }
+    get orderNo(): Uuid {
+        return this._orderNo;
     }
 
 }
