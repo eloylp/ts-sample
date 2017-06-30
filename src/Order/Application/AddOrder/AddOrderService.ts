@@ -20,7 +20,6 @@ export class AddOrderService {
 
     public perform(command: AddOrderCommand): string {
 
-
         let customer = this.customerRepository.getByEmail(command.customer);
 
         if (!customer) {
