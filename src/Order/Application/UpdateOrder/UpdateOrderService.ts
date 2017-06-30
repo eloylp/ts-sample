@@ -19,6 +19,7 @@ export class UpdateOrderService {
         if (Status.getStatuses().indexOf(command.status) == -1) {
             throw new Error("Status not found !!");
         }
+
         let order = this.orderRepository.getByUid(command.uuid);
         if (!order) {
             throw new Error("Order not found !!");

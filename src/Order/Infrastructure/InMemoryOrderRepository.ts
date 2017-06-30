@@ -4,29 +4,28 @@ import {Order} from "../Domain/Order";
 export class InMemoryOrderRepository implements OrderRepository {
 
 
-    private store: Array<Order>;
+    private _store: Array<Order>;
 
     constructor() {
-        this.store = [];
+        this._store = [];
     }
 
     update(order: Order): void {
-        for (let savedOrder in this.store) {
-            if (this.store[savedOrder].orderNo.uuid == order.orderNo.uuid) {
-                delete this.store[savedOrder];
-                this.store.push(order);
+        for (let i = 0, l = this._store.length; i < l; i++) {
+            if (this._store[i].orderNo.uuid == order.orderNo.uuid) {
+                this._store.splice(i, 1);
+                this._store.push(order);
             }
         }
     }
 
     save(order: Order): void {
-        this.store.push(order);
+        this._store.push(order);
     }
 
     getByUid(uid: string): Order | null {
-
-        for(let order of this.store){
-            if(order.orderNo.uuid == uid){
+        for (let order of this._store) {
+            if (order.orderNo.uuid == uid) {
                 return order;
             }
         }

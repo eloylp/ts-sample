@@ -1,26 +1,46 @@
+import {Customer} from "./Customer/Domain/Customer";
+import {Status} from "./Order/Domain/Status";
+import {InMemoryOrderRepository} from "./Order/Infrastructure/InMemoryOrderRepository";
+import {RequestedStatusSubscriber} from "./Order/Domain/RequestedStatusSubscriber";
+import {SentStatusSubscriber} from "./Order/Domain/SentStatusSubscriber";
+import {InProgressStatusSubscriber} from "./Order/Domain/InProgressStatusSubscriber";
+import {StatusPublisher} from "./Order/Domain/StatusPublisher";
+import {AddOrderService} from "./Order/Application/AddOrder/AddOrderService";
+import {OrderRepository} from "./Order/Domain/OrderRepository";
+import {CustomerRepository} from "./Customer/Domain/CustomerRepository";
+import {InMemoryCustomerRepository} from "./Customer/Infrastructure/InMemoryCustomerRepository";
+import {UpdateOrderService} from "./Order/Application/UpdateOrder/UpdateOrderService";
+import {AddOrderCommand} from "./Order/Application/AddOrder/AddOrderCommand";
+import {UpdateOrderCommand} from "./Order/Application/UpdateOrder/UpdateOrderCommand";
 
+
+const getRandomFromArray = function (myArray: Array<any>): any {
+    return myArray[Math.floor(Math.random() * myArray.length)];
+};
 
 /*
  Creating context
  */
 
-import {StatusPublisher} from "./Order/Domain/StatusPublisher";
-import {RequestedStatusSubscriber} from "./Order/Domain/RequestedStatusSubscriber";
-import {InProgressStatusSubscriber} from "./Order/Domain/InProgressStatusSubscriber";
-import {SentStatusSubscriber} from "./Order/Domain/SentStatusSubscriber";
-import {Customer} from "./Customer/Domain/Customer";
-import {Order} from "./Order/Domain/Order";
-import {Uuid} from "./Order/Domain/Uuid";
-import {Status} from "./Order/Domain/Status";
+const statusPublisher: StatusPublisher = new StatusPublisher();
+const orderRepository: OrderRepository = new InMemoryOrderRepository();
+const customerRepository: CustomerRepository = new InMemoryCustomerRepository();
 
-let statusPublisher = new StatusPublisher();
 statusPublisher.subscribe(new RequestedStatusSubscriber());
 statusPublisher.subscribe(new InProgressStatusSubscriber());
 statusPublisher.subscribe(new SentStatusSubscriber());
 
-const getRandomFromArray = function (myArray: Array<any>): any {
-    return myArray[Math.floor(Math.random() * myArray.length)];
-};
+const addOrderService: AddOrderService = new AddOrderService(
+    orderRepository,
+    customerRepository,
+    statusPublisher
+);
+
+const updateOrderService: UpdateOrderService = new UpdateOrderService(
+    orderRepository,
+    statusPublisher
+);
+
 
 let availableItems: Array<string> = [
     'car', 'snorkel', 'book', 'computer', 'desk'
@@ -34,58 +54,41 @@ let availableCustomers: Array<any> = [
     {"name": "Luisa", "email": "luisa@mailserver.com"}
 ];
 
-let customers: Array<Customer> = [];
-let orders: Array<Order> = [];
-
-new Promise(function (resolve) {
-
-    console.log("Creating customers ...");
-
-    for (let customer of availableCustomers) {
-        customers.push(new Customer(customer.name, customer.email));
-    }
-    console.log(customers);
-
-    resolve();
-
-}).then(function () {
-
-    console.log("Creating orders ...");
-    for (let i: number = 0, l: number = 10; i < l; i++) {
-
-        orders.push(new Order(
-            new Uuid(),
-            getRandomFromArray(customers),
-            [getRandomFromArray(availableItems), getRandomFromArray(availableItems)]
-        ));
-    }
-    console.log(orders);
+let orders: Array<string> = [];
 
 
-}).then(function () {
+console.log("Creating customers ...");
+for (let customer of availableCustomers) {
+    customerRepository.save(new Customer(customer.name, customer.email));
+}
 
-    console.log("___________ PUBLISHING ORDERS STATUS ___________");
+console.log("Creating orders ...");
+for (let i: number = 0, l: number = 10; i < l; i++) {
 
-    for (let order of orders) {
-        statusPublisher.publish(order);
-    }
+    let createdOrder = addOrderService.perform(new AddOrderCommand(
+        getRandomFromArray(availableCustomers).email,
+        [getRandomFromArray(availableItems), getRandomFromArray(availableItems)]
+    ));
+    orders.push(createdOrder);
+}
 
-}).then(function () {
 
-    console.log("___________ CHANGING/PUBLISHING ORDERS STATUS ___________");
+console.log("___________ CHANGING/PUBLISHING ORDERS STATUS ___________");
 
-    for (let order of orders) {
-        order.status = Status.inProgress;
-        statusPublisher.publish(order);
-    }
+for (let order of orders) {
 
-}).then(function () {
+    updateOrderService.perform(new UpdateOrderCommand(
+        order,
+        Status.inProgress
+    ));
+}
 
-    console.log("___________ CHANGING/PUBLISHING ORDERS STATUS ___________");
 
-    for (let order of orders) {
-        order.status = Status.sent;
-        statusPublisher.publish(order);
-    }
+console.log("___________ CHANGING/PUBLISHING ORDERS STATUS ___________");
 
-});
+for (let order of orders) {
+    updateOrderService.perform(new UpdateOrderCommand(
+        order,
+        Status.sent
+    ));
+}

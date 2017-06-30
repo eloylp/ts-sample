@@ -3,28 +3,28 @@ import {CustomerRepository} from "../Domain/CustomerRepository";
 
 export class InMemoryCustomerRepository implements CustomerRepository {
 
-    private store: Array<Customer>;
+    private _store: Array<Customer>;
 
     constructor() {
-        this.store = [];
+        this._store = [];
     }
 
     save(order: Customer): void {
-        this.store.push(order);
+        this._store.push(order);
     }
 
     update(customer: Customer): void {
-        for (let savedCustomer in this.store) {
-            if (this.store[savedCustomer].email == customer.email) {
-                delete this.store[savedCustomer];
-                this.store.push(customer);
+        for (let i = 0, l = this._store.length; i < l; i++) {
+            if (this._store[i].email == customer.email) {
+                this._store.splice(i, 1);
+                this._store.push(customer);
             }
         }
     }
 
     getByEmail(email: string): Customer | null {
 
-        for(let customer of this.store){
+        for (let customer of this._store) {
             if(customer.email == email){
                 return customer;
             }

@@ -5,7 +5,11 @@ import {Order} from "./Order";
 
 export class StatusPublisher implements Publisher {
 
-    private subscribers: Array<Subscriber> = [];
+    private subscribers: Array<Subscriber>;
+
+    constructor() {
+        this.subscribers = [];
+    }
 
     subscribe(subscriber: Subscriber): void {
 
