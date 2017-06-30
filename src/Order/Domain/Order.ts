@@ -5,7 +5,6 @@ import {Customer} from "../../Customer/Domain/Customer";
 export class Order {
 
 
-
     private _orderNo: Uuid;
     private _customer: Customer;
     private _status: string;
