@@ -1,49 +1,42 @@
-import {Uuid} from "./Uuid";
-import {Status} from "./Status";
-import {Customer} from "../../Customer/Domain/Customer";
+import { Uuid } from './Uuid';
+import { Status } from './Status';
+import { Customer } from '../../Customer/Domain/Customer';
+import { StatusValue } from './StatusValue';
 
 export class Order {
 
+  constructor (private _orderNo: Uuid,
+               private _customer: Customer,
+               private _items: Array<string>,
+               private _status: StatusValue = Status.requested) {
+  }
 
-    private _orderNo: Uuid;
-    private _customer: Customer;
-    private _status: string;
-    private _items: Array<string>;
+  get status (): StatusValue {
+    return this._status;
+  }
 
-    constructor(uuid: Uuid, customer: Customer, items: Array<string>, status: string = Status.requested) {
+  set status (value: StatusValue) {
+    this._status = value;
+  }
 
-        this._orderNo = uuid;
-        this._customer = customer;
-        this.items = items;
-        this.status = status;
+  get items (): Array<string> {
+    return this._items;
+  }
 
-    }
+  set items (value: Array<string>) {
+    this._items = value;
+  }
 
-    get status(): string {
-        return this._status;
-    }
+  addItem (itemId: string) {
+    this._items.push(itemId);
+  }
 
-    set status(value: string) {
-        this._status = value;
-    }
+  get customer (): Customer {
+    return this._customer;
+  }
 
-    get items(): Array<string> {
-        return this._items;
-    }
-
-    set items(value: Array<string>) {
-        this._items = value;
-    }
-
-    addItem(itemId: string) {
-        this._items.push(itemId);
-    }
-
-    get customer(): Customer {
-        return this._customer;
-    }
-    get orderNo(): Uuid {
-        return this._orderNo;
-    }
+  get orderNo (): Uuid {
+    return this._orderNo;
+  }
 
 }

@@ -1,12 +1,11 @@
-
-import {Order} from "./Order";
+import { Order } from './Order';
 
 export interface OrderRepository {
 
-    save(order: Order): void;
+  save(order: Order): void;
 
-    update(order: Order): void;
+  update(order: Order): void;
 
-    getByUid(uid: string): Order | null;
+  getByUid(uid: string): Order | void;
 
 }

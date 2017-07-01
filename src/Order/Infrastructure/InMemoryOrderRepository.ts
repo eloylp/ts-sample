@@ -1,34 +1,26 @@
-import {OrderRepository} from "../Domain/OrderRepository";
-import {Order} from "../Domain/Order";
+import { OrderRepository } from '../Domain/OrderRepository';
+import { Order } from '../Domain/Order';
 
 export class InMemoryOrderRepository implements OrderRepository {
 
 
-    private _store: Array<Order>;
+  private order: Array<Order> = [];
 
-    constructor() {
-        this._store = [];
-    }
+  constructor () {
+  }
 
-    update(order: Order): void {
-        for (let i = 0, l = this._store.length; i < l; i++) {
-            if (this._store[i].orderNo.uuid == order.orderNo.uuid) {
-                this._store.splice(i, 1);
-                this._store.push(order);
-            }
-        }
+  update (order: Order): void {
+    const index = this.order.findIndex((o: Order) => o.orderNo.uuid === order.orderNo.uuid);
+    if (index !== -1) {
+      this.order.splice(index, 1, order);
     }
+  }
 
-    save(order: Order): void {
-        this._store.push(order);
-    }
+  save (order: Order): void {
+    this.order.push(order);
+  }
 
-    getByUid(uid: string): Order | null {
-        for (let order of this._store) {
-            if (order.orderNo.uuid == uid) {
-                return order;
-            }
-        }
-        return null;
-    }
+  getByUid (uid: string): Order | void {
+    return this.order.find((order: Order) => order.orderNo.uuid === uid);
+  }
 }

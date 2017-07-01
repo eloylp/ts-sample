@@ -1,18 +1,16 @@
-
-
-import {Status} from "./Status";
-import {Subscriber} from "../../Core/Subscriber";
-import {Order} from "./Order";
+import { Status } from './Status';
+import { Subscriber } from '../../Core/Subscriber';
+import { Order } from './Order';
 
 export class SentStatusSubscriber implements Subscriber {
-    handle(order: Order): void {
-        console.log("Order has been sent. A new email was sent (" + order.customer.email + ") to our customer " + order.customer.name + ". we expect some feedback !!");
-        console.log("Items sent: " + order.items.join(', '));
+  handle ({ customer, items }: Order): void {
+    const { email, name } = customer;
+    console.log(`Order has been sent. A new email was sent (${email}) to our customer ${name}. we expect some feedback !!`);
+    console.log(`Items sent: ${items.join(', ')}`);
+  }
 
-    }
-
-    isSubscribedTo(order: Order): boolean {
-        return order.status == Status.sent;
-    }
+  isSubscribedTo ({ status }: Order): boolean {
+    return status === Status.sent;
+  }
 }
 

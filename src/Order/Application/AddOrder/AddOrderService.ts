@@ -1,37 +1,31 @@
-import {OrderRepository} from "../../Domain/OrderRepository";
-import {Publisher} from "../../../Core/Publisher";
-import {AddOrderCommand} from "./AddOrderCommand";
-import {Order} from "../../Domain/Order";
-import {Uuid} from "../../Domain/Uuid";
-import {CustomerRepository} from "../../../Customer/Domain/CustomerRepository";
+import { OrderRepository } from '../../Domain/OrderRepository';
+import { Publisher } from '../../../Core/Publisher';
+import { AddOrderCommand } from './AddOrderCommand';
+import { Order } from '../../Domain/Order';
+import { Uuid } from '../../Domain/Uuid';
+import { CustomerRepository } from '../../../Customer/Domain/CustomerRepository';
+import { CustomerNotFoundException } from '../../../Customer/Domain/CustomerNotFoundException';
 
 export class AddOrderService {
+  constructor (private orderRepository: OrderRepository,
+               private customerRepository: CustomerRepository,
+               private statusPublisher: Publisher) {
+  }
 
-    private orderRepository: OrderRepository;
-    private customerRepository: CustomerRepository;
-    private statusPublisher: Publisher;
+  public perform ({ customer, items }: AddOrderCommand): string {
 
-    constructor(orderRepository: OrderRepository, customerRepository: CustomerRepository, statusPublisher: Publisher) {
+    const customerFound = this.customerRepository.getByEmail(customer);
 
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.statusPublisher = statusPublisher;
+    if (!customerFound) {
+      throw CustomerNotFoundException.fromCustomer(customer);
     }
 
-    public perform(command: AddOrderCommand): string {
+    const orderUid = new Uuid();
+    const order = new Order(orderUid, customerFound, items);
 
-        let customer = this.customerRepository.getByEmail(command.customer);
+    this.orderRepository.save(order);
+    this.statusPublisher.publish(order);
 
-        if (!customer) {
-            throw new Error("Customer not found !!");
-        }
-
-        let orderUid = new Uuid();
-        let order = new Order(orderUid, customer, command.items);
-
-        this.orderRepository.save(order);
-        this.statusPublisher.publish(order);
-
-        return orderUid.uuid;
-    }
+    return orderUid.uuid;
+  }
 }

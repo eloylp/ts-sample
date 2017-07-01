@@ -1,18 +1,12 @@
 export class AddOrderCommand {
+  constructor (private _customer: string, private _items: Array<string>) {
+  }
 
-    private _customer: string;
-    private _items: Array<string>;
+  get items (): Array<string> {
+    return this._items;
+  }
 
-    constructor(customer: string, items: Array<string>) {
-        this._customer = customer;
-        this._items = items;
-    }
-
-    get items(): Array<string> {
-        return this._items;
-    }
-
-    get customer(): string {
-        return this._customer;
-    }
+  get customer (): string {
+    return this._customer;
+  }
 }

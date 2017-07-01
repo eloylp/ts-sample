@@ -1,34 +1,36 @@
-import {OrderRepository} from "../../Domain/OrderRepository";
-import {Publisher} from "../../../Core/Publisher";
-import {UpdateOrderCommand} from "./UpdateOrderCommand";
-import {Status} from "../../Domain/Status";
+import { OrderRepository } from '../../Domain/OrderRepository';
+import { Publisher } from '../../../Core/Publisher';
+import { UpdateOrderCommand } from './UpdateOrderCommand';
+import { Status } from '../../Domain/Status';
+import { StatusValue } from '../../Domain/StatusValue';
+import { StatusNotFoundException } from '../../Domain/StatusNotFoundException';
+import { OrderNotFoundException } from '../../Domain/OrderNotFoundException';
 
 export class UpdateOrderService {
 
-    private orderRepository: OrderRepository;
-    private statusPublisher: Publisher;
+  constructor (private orderRepository: OrderRepository, private statusPublisher: Publisher) {
+  }
 
-    constructor(orderRepository: OrderRepository, statusPublisher: Publisher) {
+  public perform ({ status, uuid }: UpdateOrderCommand): boolean {
 
-        this.orderRepository = orderRepository;
-        this.statusPublisher = statusPublisher;
+    this.checkIfStatusExists(status);
+
+    const order = this.orderRepository.getByUid(uuid);
+    if (!order) {
+      throw OrderNotFoundException.fromUuid(uuid);
     }
+    order.status = <StatusValue>status;
 
-    public perform(command: UpdateOrderCommand): boolean {
+    this.orderRepository.update(order);
+    this.statusPublisher.publish(order);
 
-        if (Status.getStatuses().indexOf(command.status) == -1) {
-            throw new Error("Status not found !!");
-        }
+    return true;
+  }
 
-        let order = this.orderRepository.getByUid(command.uuid);
-        if (!order) {
-            throw new Error("Order not found !!");
-        }
-        order.status = command.status;
-
-        this.orderRepository.update(order);
-        this.statusPublisher.publish(order);
-
-        return true
+  private checkIfStatusExists (status: string) {
+    const statusNotExists = (s: StatusValue) => s !== status;
+    if (Status.getStatuses().every(statusNotExists)) {
+      throw StatusNotFoundException.fromStatusValue(status);
     }
+  }
 }
