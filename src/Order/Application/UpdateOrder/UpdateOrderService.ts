@@ -1,10 +1,10 @@
-import { OrderRepository } from '../../Domain/OrderRepository';
-import { Publisher } from '../../../Core/Publisher';
-import { UpdateOrderCommand } from './UpdateOrderCommand';
-import { Status } from '../../Domain/Status';
-import { StatusValue } from '../../Domain/StatusValue';
-import { StatusNotFoundException } from '../../Domain/StatusNotFoundException';
-import { OrderNotFoundException } from '../../Domain/OrderNotFoundException';
+import { OrderRepository } from '../../Domain/OrderRepository'
+import { Publisher } from '../../../Core/Publisher'
+import { UpdateOrderCommand } from './UpdateOrderCommand'
+import { Status } from '../../Domain/Status'
+import { StatusValue } from '../../Domain/StatusValue'
+import { StatusNotFoundException } from '../../Domain/StatusNotFoundException'
+import { OrderNotFoundException } from '../../Domain/OrderNotFoundException'
 
 export class UpdateOrderService {
 
@@ -13,24 +13,24 @@ export class UpdateOrderService {
 
   public perform ({ status, uuid }: UpdateOrderCommand): boolean {
 
-    this.checkIfStatusExists(status);
+    this.checkIfStatusExists(status)
 
-    const order = this.orderRepository.getByUid(uuid);
+    const order = this.orderRepository.getByUid(uuid)
     if (!order) {
-      throw OrderNotFoundException.fromUuid(uuid);
+      throw OrderNotFoundException.fromUuid(uuid)
     }
-    order.status = <StatusValue>status;
+    order.status = <StatusValue>status
 
-    this.orderRepository.update(order);
-    this.statusPublisher.publish(order);
+    this.orderRepository.update(order)
+    this.statusPublisher.publish(order)
 
-    return true;
+    return true
   }
 
   private checkIfStatusExists (status: string) {
-    const statusNotExists = (s: StatusValue) => s !== status;
+    const statusNotExists = (s: StatusValue) => s !== status
     if (Status.getStatuses().every(statusNotExists)) {
-      throw StatusNotFoundException.fromStatusValue(status);
+      throw StatusNotFoundException.fromStatusValue(status)
     }
   }
 }

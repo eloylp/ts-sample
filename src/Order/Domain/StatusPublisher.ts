@@ -1,23 +1,23 @@
-import { Publisher } from '../../Core/Publisher';
-import { Subscriber } from '../../Core/Subscriber';
-import { Order } from './Order';
+import { Publisher } from '../../Core/Publisher'
+import { Subscriber } from '../../Core/Subscriber'
+import { Order } from './Order'
 
 export class StatusPublisher implements Publisher {
 
-  private subscribers: Array<Subscriber> = [];
+  private subscribers: Array<Subscriber> = []
 
   constructor () {}
 
   subscribe (subscriber: Subscriber): void {
 
-    this.subscribers.push(subscriber);
+    this.subscribers.push(subscriber)
   }
 
   publish (order: Order): void {
 
     for (const subscriber of this.subscribers) {
       if (subscriber.isSubscribedTo(order)) {
-        subscriber.handle(order);
+        subscriber.handle(order)
       }
     }
   }

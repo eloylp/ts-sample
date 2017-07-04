@@ -5,11 +5,11 @@ export class UpdateOrderCommand {
   }
 
   get status (): string {
-    return this._status;
+    return this._status
   }
 
   get uuid (): string {
-    return this._uuid;
+    return this._uuid
   }
 
 }

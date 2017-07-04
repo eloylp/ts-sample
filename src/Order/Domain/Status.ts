@@ -1,8 +1,8 @@
-import { StatusValue } from './StatusValue';
+import { StatusValue } from './StatusValue'
 export class Status {
-  static readonly requested: StatusValue = StatusValue.Requested;
-  static readonly inProgress: StatusValue = StatusValue.InProgress;
-  static readonly sent: StatusValue = StatusValue.Sent;
+  static readonly requested: StatusValue = StatusValue.Requested
+  static readonly inProgress: StatusValue = StatusValue.InProgress
+  static readonly sent: StatusValue = StatusValue.Sent
 
   public static getStatuses (): Array<StatusValue> {
 
@@ -10,6 +10,6 @@ export class Status {
       this.requested,
       this.inProgress,
       this.sent
-    ];
+    ]
   }
 }

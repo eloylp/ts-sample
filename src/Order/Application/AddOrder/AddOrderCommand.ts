@@ -3,10 +3,10 @@ export class AddOrderCommand {
   }
 
   get items (): Array<string> {
-    return this._items;
+    return this._items
   }
 
   get customer (): string {
-    return this._customer;
+    return this._customer
   }
 }
