@@ -23,13 +23,18 @@
   },
   "homepage": "https://github.com/eloylp/ts-sample#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
     "typescript": "^2.3.4",
-    "typings": "^2.1.1"
+    "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.4",
     "@types/chai": "^4.0.1",
+    "@types/express": "^4.0.36",
     "@types/mocha": "^2.2.41",
     "@types/sinon": "^2.3.2",
+    "@types/winston": "^2.3.3",
     "chai": "^4.0.2",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
