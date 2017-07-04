@@ -3,12 +3,14 @@ import { UpdateReviewResponse } from './UpdateReviewResponse'
 import { InMemoryReviewRepository } from '../../Infraestructure/InMemoryReviewRepository'
 import { UpdateReviewCommand } from './UpdateReviewCommand'
 import { LoggerService } from '../../../Infrastructure/Persistence/Logger'
+import { EventDispatcher,  } from '../../../Core/EventDispatcher'
+import { UPDATE_REVIEW } from '../../../Core/Commit'
 
 export class UpdateReviewService {
   constructor (private updateReviewResponse: UpdateReviewResponse,
                private reviewRepository: InMemoryReviewRepository,
-               private logger: LoggerService
-               /*TODO inject eventDispatcher o el publisher*/) {
+               private logger: LoggerService,
+               private eventDispatcher: EventDispatcher) {
   }
 
   perform (updateReviewCommand: UpdateReviewCommand): UpdateReviewResponse {
@@ -22,6 +24,7 @@ export class UpdateReviewService {
     }
     this.updateReviewResponse.setMessage(message)
     this.logger.info(`${message}`)
+    this.eventDispatcher.dispatch(UPDATE_REVIEW)
     return this.updateReviewResponse
   }
 }
