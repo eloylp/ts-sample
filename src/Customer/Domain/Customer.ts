@@ -3,18 +3,18 @@ export class Customer {
   }
 
   get email (): string {
-    return this._email;
+    return this._email
   }
 
   set email (value: string) {
-    this._email = value;
+    this._email = value
   }
 
   get name (): string {
-    return this._name;
+    return this._name
   }
 
   set name (value: string) {
-    this._name = value;
+    this._name = value
   }
 }
