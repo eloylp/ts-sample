@@ -7,8 +7,7 @@ import { EventDispatcher,  } from '../../../Core/EventDispatcher'
 import { UPDATE_REVIEW } from '../../../Core/Commit'
 
 export class UpdateReviewService {
-  constructor (private updateReviewResponse: UpdateReviewResponse,
-               private reviewRepository: InMemoryReviewRepository,
+  constructor (private reviewRepository: InMemoryReviewRepository,
                private logger: LoggerService,
                private eventDispatcher: EventDispatcher) {
   }
@@ -16,15 +15,16 @@ export class UpdateReviewService {
   perform (updateReviewCommand: UpdateReviewCommand): UpdateReviewResponse {
     const review: Review = <Review>this.reviewRepository.find(updateReviewCommand.getReview())
     let message = ''
+    const response = new UpdateReviewResponse()
     if (typeof review !== 'undefined') {
       message = (review.getState() === ReviewStates.IN_PROGRESS) ? 'update review' : 'review in progress'
     } else {
       message = 'review not found'
-      this.updateReviewResponse.setCode(404)
+      response.setCode(404)
     }
-    this.updateReviewResponse.setMessage(message)
+    response.setMessage(message)
     this.logger.info(`${message}`)
     this.eventDispatcher.dispatch(UPDATE_REVIEW)
-    return this.updateReviewResponse
+    return response
   }
 }
