@@ -13,7 +13,7 @@ export class ReviewRoutes {
   }
 
   getRoutes (): Router {
-    this.router.use(ReviewRoutes.getUpdateRoute(), this.controller.update)
+    this.router.put(ReviewRoutes.getUpdateRoute(), this.controller.update)
     return this.router
   }
 }

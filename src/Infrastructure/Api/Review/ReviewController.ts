@@ -10,7 +10,6 @@ export class ReviewController {
   update (req: express.Request, res: express.Response): void {
     const reviewId: string = req.params.id
     const result: UpdateReviewResponse = new UpdateReviewService(
-      new UpdateReviewResponse(),
       new InMemoryReviewRepository(),
       new LoggerService(),
       eventDispatcher
