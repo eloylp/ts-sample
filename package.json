@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "tsc:init": "tsc --init",
     "tsc:watch": "tsc -w",
-    "tslint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
+    "tslint": "./node_modules/.bin/tslint -c tslint.json --out 'issues.json' 'src/**/*.ts'",
     "watch": ". ./bash/node_path.sh && npm run tsc:watch"
   },
   "repository": {
