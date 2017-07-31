@@ -1,5 +1,5 @@
 import app from './App'
-import {Request} from 'express'
+import { Request } from 'express'
 
 const port = process.env.PORT || 3000
 

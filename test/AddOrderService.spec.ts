@@ -9,7 +9,6 @@ import { StatusPublisher } from '../src/Order/Domain/StatusPublisher'
 import { AddOrderCommand } from '../src/Order/Application/AddOrder/AddOrderCommand'
 import { CustomerNotFoundException } from '../src/Customer/Domain/CustomerNotFoundException'
 
-
 should()
 
 describe('AddOrderService', () => {
@@ -47,6 +46,6 @@ describe('AddOrderService', () => {
   })
 
   const getMockAddOrderCommand = (): AddOrderCommand => {
-    return <AddOrderCommand>{ customer: 'customerEmail', items: ['car', 'snorkel'] }
+    return { customer: 'customerEmail', items: ['car', 'snorkel'] } as AddOrderCommand
   }
 })

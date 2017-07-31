@@ -3,7 +3,7 @@ import { UpdateReviewResponse } from './UpdateReviewResponse'
 import { InMemoryReviewRepository } from '../../Infraestructure/InMemoryReviewRepository'
 import { UpdateReviewCommand } from './UpdateReviewCommand'
 import { LoggerService } from '../../../Infrastructure/Persistence/Logger'
-import { EventDispatcher,  } from '../../../Core/EventDispatcher'
+import { EventDispatcher } from '../../../Core/EventDispatcher'
 import { UPDATE_REVIEW } from '../../../Core/Commit'
 
 export class UpdateReviewService {
@@ -13,7 +13,7 @@ export class UpdateReviewService {
   }
 
   perform (updateReviewCommand: UpdateReviewCommand): UpdateReviewResponse {
-    const review: Review = <Review>this.reviewRepository.find(updateReviewCommand.getReview())
+    const review: Review = this.reviewRepository.find(updateReviewCommand.getReview()) as Review
     let message = ''
     const response = new UpdateReviewResponse()
     if (typeof review !== 'undefined') {

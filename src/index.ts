@@ -13,7 +13,6 @@ import { UpdateOrderService } from './Order/Application/UpdateOrder/UpdateOrderS
 import { AddOrderCommand } from './Order/Application/AddOrder/AddOrderCommand'
 import { UpdateOrderCommand } from './Order/Application/UpdateOrder/UpdateOrderCommand'
 
-
 const getRandomFromArray = function (myArray: Array<any>): any {
   return myArray[Math.floor(Math.random() * myArray.length)]
 }
@@ -72,7 +71,6 @@ for (let i: number = 0, l: number = 10; i < l; i++) {
   orders.push(createdOrder)
 }
 
-
 console.log('___________ CHANGING/PUBLISHING ORDERS STATUS ___________')
 
 for (const order of orders) {
@@ -82,7 +80,6 @@ for (const order of orders) {
     Status.inProgress
   ))
 }
-
 
 console.log('___________ CHANGING/PUBLISHING ORDERS STATUS ___________')
 

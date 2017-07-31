@@ -4,7 +4,6 @@ import 'mocha'
 import { Status } from '../src/Order/Domain/Status'
 import { StatusValue } from '../src/Order/Domain/StatusValue'
 
-
 should()
 
 describe('Status class', () => {

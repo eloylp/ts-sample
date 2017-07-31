@@ -1,4 +1,4 @@
-import {json, urlencoded} from 'body-parser'
+import { json, urlencoded } from 'body-parser'
 
 export class BodyParser {
   static getMethods () {

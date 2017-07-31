@@ -1,7 +1,18 @@
-import {Logger, transports, LoggerInstance} from 'winston'
+import { Logger, transports, LoggerInstance } from 'winston'
 
 export class LoggerService {
   private executor: LoggerInstance
+
+  constructor () {
+    this.executor = new (Logger)({
+      transports: [
+        new (transports.Console)(),
+        new (transports.File)(LoggerService.getInfoLoggerConfiguration()),
+        new (transports.File)(LoggerService.getErrorLoggerConfiguration())
+      ]
+    })
+  }
+
   static getErrorLoggerConfiguration () {
     return {
       name: 'error-file',
@@ -16,16 +27,6 @@ export class LoggerService {
       filename: 'logs/filelog-info.log',
       level: 'info'
     }
-  }
-
-  constructor () {
-    this.executor = new (Logger)({
-      transports: [
-        new (transports.Console)(),
-        new (transports.File)(LoggerService.getInfoLoggerConfiguration()),
-        new (transports.File)(LoggerService.getErrorLoggerConfiguration())
-      ]
-    })
   }
 
   info (message: string) {

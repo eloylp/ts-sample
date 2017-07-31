@@ -1,6 +1,8 @@
-import {Repository} from './Repository'
+import { Repository } from './Repository'
+
 export class InMemoryRepository<Entity extends Repository> {
-  constructor (protected reviews: Array<Entity> = []) {}
+  constructor (protected reviews: Array<Entity> = []) {
+  }
 
   update (review: Entity): void {
     const index = this.reviews.findIndex((r: Entity) => r.id === review.id)

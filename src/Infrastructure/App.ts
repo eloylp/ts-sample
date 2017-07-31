@@ -6,7 +6,6 @@ import eventDispatcher from '../Core/EventDispatcher'
 import { UpdateReviewCommit } from '../Review/Domain/UpdateReviewCommit'
 import { LoggerService } from './Persistence/Logger'
 
-
 class App {
   public express: Express
 
