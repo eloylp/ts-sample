@@ -13,4 +13,3 @@ export class InProgressStatusSubscriber implements Subscriber {
     return status === Status.inProgress
   }
 }
-

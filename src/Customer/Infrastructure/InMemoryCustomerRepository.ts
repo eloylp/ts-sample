@@ -5,9 +5,6 @@ export class InMemoryCustomerRepository implements CustomerRepository {
 
   private store: Array<Customer> = []
 
-  constructor () {
-  }
-
   save (order: Customer): void {
     this.store.push(order)
   }

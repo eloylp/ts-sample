@@ -19,7 +19,7 @@ export class UpdateOrderService {
     if (!order) {
       throw OrderNotFoundException.fromUuid(uuid)
     }
-    order.status = <StatusValue>status
+    order.status = status as StatusValue
 
     this.orderRepository.update(order)
     this.statusPublisher.publish(order)

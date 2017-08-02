@@ -1,4 +1,4 @@
-import  { Status } from './Status'
+import { Status } from './Status'
 import { Order } from './Order'
 import { Subscriber } from '../../Core/Subscriber'
 

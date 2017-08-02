@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events'
 export type EventTypes = 'UPDATE_REVIEW'
 export const UPDATE_REVIEW: EventTypes = 'UPDATE_REVIEW'
 interface CommitInterface {

@@ -13,4 +13,3 @@ export class SentStatusSubscriber implements Subscriber {
     return status === Status.sent
   }
 }
-

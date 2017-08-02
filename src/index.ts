@@ -40,7 +40,6 @@ const updateOrderService: UpdateOrderService = new UpdateOrderService(
   statusPublisher
 )
 
-
 const availableItems: Array<string> = [
   'car', 'snorkel', 'book', 'computer', 'desk'
 ]
@@ -55,14 +54,13 @@ const availableCustomers: Array<any> = [
 
 const orders: Array<string> = []
 
-
 console.log('Creating customers ...')
 for (const { name, email } of availableCustomers) {
   customerRepository.save(new Customer(name, email))
 }
 
 console.log('Creating orders ...')
-for (let i: number = 0, l: number = 10; i < l; i++) {
+for (let i: number = 0; i < 10; i++) {
 
   const createdOrder = addOrderService.perform(new AddOrderCommand(
     getRandomFromArray(availableCustomers).email,

@@ -6,8 +6,6 @@ export class StatusPublisher implements Publisher {
 
   private subscribers: Array<Subscriber> = []
 
-  constructor () {}
-
   subscribe (subscriber: Subscriber): void {
 
     this.subscribers.push(subscriber)

@@ -3,11 +3,7 @@ import { Order } from '../Domain/Order'
 
 export class InMemoryOrderRepository implements OrderRepository {
 
-
   private order: Array<Order> = []
-
-  constructor () {
-  }
 
   update (order: Order): void {
     const index = this.order.findIndex((o: Order) => o.orderNo.uuid === order.orderNo.uuid)
