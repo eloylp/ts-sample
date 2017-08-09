@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/**.spec.ts",
-    "testrunner": "./node_modules/.bin/karma start karma.conf.js --single-run",
+    "test": "./node_modules/.bin/karma start karma.conf.js --single-run",
+    "test-mocha": "mocha -r ts-node/register test/**/**.spec.ts",
     "tsc": "tsc",
     "tsc:init": "tsc --init",
     "tsc:watch": "tsc -w",
