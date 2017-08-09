@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/**/**.spec.ts",
-    "test-runner": "./node_modules/.bin/karma start karma.conf.js --single-run",
+    "testrunner": "./node_modules/.bin/karma start karma.conf.js --single-run",
     "tsc": "tsc",
     "tsc:init": "tsc --init",
     "tsc:watch": "tsc -w",
