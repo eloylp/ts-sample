@@ -9,8 +9,7 @@
     "tsc:watch": "tsc -w",
     "tslint": "./node_modules/.bin/tslint -c tslint.json --out 'issues.json' 'src/**/*.ts'",
     "watch": ". ./bash/node_path.sh && npm run tsc:watch",
-    "test": "NODE_ENV=test mocha",
-    "test:coverage": "nyc --cache mocha"
+    "test": "NODE_ENV=test nyc --cache mocha"
   },
   "repository": {
     "type": "git",
