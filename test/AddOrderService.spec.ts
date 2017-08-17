@@ -1,5 +1,5 @@
-import { expect, should } from 'chai'
 import { stub, restore } from 'sinon'
+import { expect } from 'chai'
 import { AddOrderService } from '../src/Order/Application/AddOrder/AddOrderService'
 import { OrderRepository } from '../src/Order/Domain/OrderRepository'
 import { InMemoryOrderRepository } from '../src/Order/Infrastructure/InMemoryOrderRepository'
@@ -8,8 +8,6 @@ import { InMemoryCustomerRepository } from '../src/Customer/Infrastructure/InMem
 import { StatusPublisher } from '../src/Order/Domain/StatusPublisher'
 import { AddOrderCommand } from '../src/Order/Application/AddOrder/AddOrderCommand'
 import { CustomerNotFoundException } from '../src/Customer/Domain/CustomerNotFoundException'
-
-should()
 
 describe('AddOrderService', () => {
   let service: AddOrderService
@@ -31,7 +29,7 @@ describe('AddOrderService', () => {
     stub(statusPublisher, 'publish')
 
     const uuid = service.perform(getMockAddOrderCommand())
-    uuid.should.be.an('string')
+    expect(uuid).to.be.an('string')
 
     restore(orderRepository.save)
     restore(statusPublisher.publish)
@@ -43,6 +41,7 @@ describe('AddOrderService', () => {
     expect(() => {
       service.perform(getMockAddOrderCommand())
     }).to.throw(CustomerNotFoundException, 'Customer customerEmail not found !!')
+    restore(customerRepository.getByEmail)
   })
 
   const getMockAddOrderCommand = (): AddOrderCommand => {
